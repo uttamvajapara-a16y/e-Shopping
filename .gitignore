@@ -18,3 +18,9 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+
+middleware/
+
+**/routes/orderRoutes.js
+**/routes/analyticsRoutes.js
+**/routes/paymentRoutes.js
