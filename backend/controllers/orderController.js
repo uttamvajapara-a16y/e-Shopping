@@ -1,5 +1,4 @@
 const Order = require('../models/Order');
-const sendEmail = require('../utils/sendEmail');
 
 const addOrderItems = async (req, res) => {
   try {
@@ -15,22 +14,6 @@ const addOrderItems = async (req, res) => {
         paymentId
       });
       const createdOrder = await order.save();
-
-      // Send Order Confirmation Email
-      const message = `
-        <h2>Order Confirmation</h2>
-        <p>Hello ${req.user.name},</p>
-        <p>Your order has been successfully placed! Order ID: <strong>${createdOrder._id}</strong></p>
-        <p>Total Amount Paid: $${totalAmount.toFixed(2)}</p>
-        <p>It will be shipped to: ${address.street}, ${address.city}</p>
-        <p>Thank you for shopping with ShopNest!</p>
-      `;
-
-      await sendEmail({
-        email: req.user.email,
-        subject: 'ShopNest - Order Confirmation',
-        message
-      });
 
       res.status(201).json(createdOrder);
     }
