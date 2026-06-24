@@ -18,6 +18,7 @@ const registerUser = async (req, res) => {
 
     const user = await User.create({ name, email, password: hashedPassword });
     if (user) {
+
       res.status(201).json({
         _id: user._id,
         name: user.name,
@@ -53,3 +54,14 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({}).select('-password');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser, getUsers };
