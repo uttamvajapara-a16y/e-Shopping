@@ -36,11 +36,11 @@ if (process.env.NODE_ENV === 'production') {
   if (frontendStaticPath) {
     app.use(express.static(frontendStaticPath));
 
-    app.get('*', (req, res) => {
+    app.get(/^\/(?!api\/).*/, (req, res) => {
       res.sendFile(path.join(frontendStaticPath, 'index.html'));
     });
   } else {
-    app.get('*', (req, res) => {
+    app.get(/^\/(?!api\/).*/, (req, res) => {
       res.status(404).send('Frontend build not found. Please run the frontend build step.');
     });
   }
